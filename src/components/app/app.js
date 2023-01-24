@@ -69,7 +69,6 @@ class App extends Component {
             })
         }))
 
-        console.log(`Increase this ${id}`);
     }
 
     onToggleRise = (id) => {
@@ -77,9 +76,15 @@ class App extends Component {
     }
 
     render() {
+        const countAll = this.state.data.length;
+
+        const getIncreased = this.state.data.filter(item => item.increase === true).length;
+
         return (
             <div className="app">
-                <AppInfo/>
+                <AppInfo
+                employeesCount={countAll}
+                increased={getIncreased}/>
     
                 <div className="search-panel">
                     <SearchPanel/>
