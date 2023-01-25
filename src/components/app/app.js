@@ -16,7 +16,8 @@ class App extends Component {
                 {name: 'Tinky-Winky', salary: 900, increase: false, rise: true, id:1},
                 {name: 'Dipsy', salary: 2000, increase: false, rise: false, id:2},
                 {name: 'Po', salary: 3400, increase: true, rise: false, id:3}
-            ]
+            ],
+            term: ''
         }
         this.maxId = 4;
     }
@@ -47,7 +48,6 @@ class App extends Component {
     }
 
     onToggleProp = (id, prop) => {
-
         this.setState( ({data}) => ({
             data: data.map(item => {
                 if (item.id === id) {
@@ -59,24 +59,42 @@ class App extends Component {
         }))
     }
 
-    render() {
-        const countAll = this.state.data.length;
+    onSearch = (arr, term) => {
+        
+        if (term.length === 0) {
+            return arr;
+        }
 
-        const getIncreased = this.state.data.filter(item => item.increase === true).length;
+        return arr.filter(item => {
+            return item.name.indexOf(term) > -1
+        })
+
+    }
+
+    onUpdSearch = (term) => {
+        this.setState({term: term})
+    }
+
+    render() {
+        const {data, term} = this.state;
+        const employeesCount = this.state.data.length;
+        const getIncreased = this.state.data.filter(item => item.increase).length;
+        const searchedData = this.onSearch(data, term);
 
         return (
             <div className="app">
                 <AppInfo
-                employeesCount={countAll}
+                employeesCount={employeesCount}
                 increased={getIncreased}/>
     
                 <div className="search-panel">
-                    <SearchPanel/>
+                    <SearchPanel
+                    onUpdSearch={this.onUpdSearch}/>
                     <AppFilter/>
                 </div>
     
                 <EmployeesList 
-                data={this.state.data}
+                data={searchedData}
                 onDelete={this.deleteItem}
                 onToggleProp={this.onToggleProp}/>
                 <EmployeesAddForm
