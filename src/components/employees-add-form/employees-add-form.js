@@ -21,13 +21,14 @@ class EmployeesAddForm extends Component {
         if (this.state.name.length <3 || this.state.salary <= 0) {
             alert('Имя не может быть меньше 3-х символов, а зарплата должна быть больше 0');
             return;
-        } else {
-            this.props.onAdd(this.state.name, this.state.salary);
-            this.setState({
-                name: '',
-                salary: ''
-            })
         }
+        
+        this.props.onAdd(this.state.name, this.state.salary);
+        this.setState({
+            name: '',
+            salary: ''
+        })
+    
 
     }
 
