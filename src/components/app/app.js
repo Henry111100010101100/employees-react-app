@@ -89,14 +89,11 @@ class App extends Component {
         this.setState({filter});
     }
 
-
-
     render() {
         const {data, term, filter} = this.state;
         const employeesCount = this.state.data.length;
         const getIncreased = this.state.data.filter(item => item.increase).length;
         const filteredAndSearchedData = this.filterData(this.search(data, term), filter);
-
 
         return (
             <div className="app">
